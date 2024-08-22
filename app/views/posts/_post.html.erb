@@ -1,14 +1,15 @@
-<div id="<%= dom_id post %>">
-  <p>
-    <%= post.title %>
-  </p>
+<%= link_to post, class: "post-container" do %>
+  <div id="<%= dom_id(post) %>" class="post">
+    <p>
+      <%= post.title %>
+    </p>
 
-  <p>
-    <%= post.description %>
-  </p>
+    <p>
+      <%= post.description %>
+    </p>
 
-  <p>
-    <%= post.keywords %>
-  </p>
-
-</div>
+    <p>
+      <%= post.keywords %>
+    </p>
+  </div>
+<% end %>
