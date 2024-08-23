@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Post < ApplicationRecord
   validates :title, presence: true, length: { minimum: 1, maximum: 30 }
   validates :description, presence: true, length: { minimum: 1, maximum: 500 }
