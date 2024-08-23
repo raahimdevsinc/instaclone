@@ -1,5 +1,5 @@
 <div class="col-xl-4 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-radius: 6px; padding: 15px">
-  <%= form_with(model: post) do |form| %>
+  <%= form_with(model: post, local: true) do |form| %>
     <h1>New post</h1>
 
     <div>
@@ -36,7 +36,12 @@
     </div>
 
     <div>
-      <%= form.submit class:"btn btn-primary col-12" %>
+      <%= form.label :images, "Upload Images", style: "display: block" %>
+      <%= form.file_field :images, multiple: true, class: "form-control" %>
+    </div>
+
+    <div>
+      <%= form.submit class: "btn btn-primary col-12" %>
     </div>
   <% end %>
 </div>
