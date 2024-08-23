@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_scope :user do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+    get '/users' => 'devise/registrations#new'
+    get 'users/password' => 'devise/passwords#new'
+  end
+  devise_for :users
   get 'home/about'
   resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
