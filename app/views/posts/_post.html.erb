@@ -12,6 +12,10 @@
       <%= post.keywords %>
     </p>
 
+    <p>
+      <%= post.user.email %>
+    </p>
+ 
     <% if post.images.attached? %>
       <div class="post-images">
         <% post.images.each do |image| %>
