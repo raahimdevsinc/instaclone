@@ -1,27 +1,14 @@
-<%= link_to post, class: "post-container" do %>
-  <div id="<%= dom_id(post) %>" class="post">
-    <p>
-      <%= post.title %>
-    </p>
+<div id="<%= dom_id post %>">
+  <p>
+    <%= post.title %>
+  </p>
 
-    <p>
-      <%= post.description %>
-    </p>
+  <p>
+    <%= post.description %>
+  </p>
 
-    <p>
-      <%= post.keywords %>
-    </p>
+  <p>
+    <%= post.keywords %>
+  </p>
 
-    <p>
-      <%= post.user.email %>
-    </p>
- 
-    <% if post.images.attached? %>
-      <div class="post-images">
-        <% post.images.each do |image| %>
-          <%= image_tag image, style: "width: 300px; height: 300px; object-fit: cover; aspect-ratio: 1 / 1;" %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+</div>
