@@ -75,3 +75,4 @@ group :development, :test do
 end
 
 gem 'devise'
+gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
