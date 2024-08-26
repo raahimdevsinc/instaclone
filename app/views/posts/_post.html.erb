@@ -12,9 +12,13 @@
       <%= post.keywords %>
     </p>
 
-    <p>
-      <%= post.user.email %>
-    </p>
+    <% if post.user %>
+      <p>
+        <%= post.user.email %>
+      </p>
+    <% else %>
+      <p>User not assigned</p>
+    <% end %>
  
     <% if post.images.attached? %>
       <div class="post-images">

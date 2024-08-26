@@ -1,0 +1,15 @@
+<%= stylesheet_link_tag "post", media: "all" %>
+
+<p style="color: green"><%= notice %></p>
+
+<div id="posts" class="text-center">
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+      <% if post.user == current_user %>
+      <%= render post %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>No posts found.</p>
+  <% end %>
+</div>
