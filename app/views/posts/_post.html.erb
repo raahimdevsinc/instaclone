@@ -12,6 +12,14 @@
       <%= post.keywords %>
     </p>
 
+    <% if post.user %>
+      <p>
+        <%= post.user.email %>
+      </p>
+    <% else %>
+      <p>User not assigned</p>
+    <% end %>
+
     <% if post.images.attached? %>
       <div class="post-images">
         <% post.images.each do |image| %>
@@ -21,3 +29,15 @@
     <% end %>
   </div>
 <% end %>
+<p>
+<%= link_to post.user.email,post.user, style:"z-index:"%>
+</p> 
+<%if user_signed_in?%>
+<% like = current_user.likes.find_by(post: post) %>
+<% if like.nil? %>
+  <%= button_to "Like", likes_path, params: { like: { post_id: post.id } }, method: :post %>
+<% else %>
+  <%= button_to "Unlike", like_path(like), method: :delete%>
+<% end %>
+<% end %> 
+<p> <%= post.likes.count %> Likes </p>

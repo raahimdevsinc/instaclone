@@ -73,3 +73,6 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
 end
+
+gem 'devise'
+gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
