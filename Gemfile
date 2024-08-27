@@ -76,3 +76,5 @@ end
 
 gem 'devise'
 gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
+gem 'pagy'
+gem 'ransack'

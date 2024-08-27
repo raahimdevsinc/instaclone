@@ -16,6 +16,10 @@ class User < ApplicationRecord
     followerable_relationships.where(followable_id: user.id).destroy_all
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[email username]
+  end
+
   private
 
   def randomize_id

@@ -10,8 +10,8 @@
 <% end %>
 <% if current_user.following?(@user) %>
   <%= button_to "Unfollow", unfollow_path(@user)%>
-<% elsif current_user.sent_follow_request?(@user) %>
+<% elsif current_user.sent_follow_request_to?(@user) %>
   <%= button_to "Cancel Request", cancel_path(@user) %>
 <% else %>
   <%= button_to "Follow", follow_path(@user) %>
-<% end %>
+<% end %> 

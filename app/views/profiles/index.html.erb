@@ -1,0 +1,14 @@
+<%= form_with url: profiles_index_path, method: :get, class: "d-flex ms-auto" do |form| %>
+  <%= form.search_field :query, value: params[:query], placeholder: "Search", class: "form-control me-2" %>
+  <%= form.submit "Search", class: "btn btn-outline-success" %>
+<% end %>
+
+<% if @users.empty? %>
+  <p>No Users Found</p>
+<% else %>
+  <div class="text-center">
+    <% @users.each do |user| %>
+      <%= render partial: 'users/user', locals: { user: user } %>
+    <% end %>
+  </div>
+<% end %>

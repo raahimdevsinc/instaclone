@@ -3,18 +3,18 @@
 class LikesController < ApplicationController
   def create
     @like = current_user.likes.find_or_initialize_by(like_params)
-    if @like.save
+    if @like.save!
       flash[:notice] = 'Post liked!'
     else
       flash[:alert] = 'You have already liked this post'
     end
-    redirect_to root_path
+    redirect_to @like.post
   end
 
   def destroy
-    @like = current_user.likes.find(params[:id])
+    @like = current_user.likes.find_by_id(params[:id])
     @like.destroy
-    redirect_to root_path
+    redirect_to @like.post
   end
 
   def like_params

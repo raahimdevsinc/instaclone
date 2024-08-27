@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'profiles/index'
   resources :likes, only: %i[create destroy]
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
