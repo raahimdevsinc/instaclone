@@ -62,9 +62,11 @@ group :development do
   # gem "spring"
 end
 
+# Add this to your Gemfile
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 
@@ -77,4 +79,5 @@ end
 gem 'devise'
 gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
 gem 'pagy'
+gem 'passenger'
 gem 'ransack'

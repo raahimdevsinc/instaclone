@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'errors/not_found'
   get 'profiles/index'
+
   resources :likes, only: %i[create destroy]
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
@@ -35,4 +37,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'posts#index'
+
+  # Catch-all route for handling 404 errors
+  match '*path', to: 'errors#not_found', via: :all
 end
