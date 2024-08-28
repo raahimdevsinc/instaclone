@@ -76,6 +76,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
 end
 
+gem 'byebug'
 gem 'devise'
 gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
 gem 'pagy'

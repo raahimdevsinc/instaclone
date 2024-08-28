@@ -6,18 +6,30 @@ class CommentsController < ApplicationController
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
+  rescue StandardError => e
+    redirect_to root_path, alert: "An error occurred while fetching comments: #{e.message}"
   end
 
   # GET /comments/1 or /comments/1.json
-  def show; end
+  def show
+    # The @comment is already set by before_action
+  rescue ActiveRecord::RecordNotFound
+    redirect_to comments_path, alert: 'Comment not found.'
+  end
 
   # GET /comments/new
   def new
     @comment = Comment.new
+  rescue StandardError => e
+    redirect_to comments_path, alert: "An error occurred while initializing a new comment: #{e.message}"
   end
 
   # GET /comments/1/edit
-  def edit; end
+  def edit
+    # The @comment is already set by before_action
+  rescue ActiveRecord::RecordNotFound
+    redirect_to comments_path, alert: 'Comment not found.'
+  end
 
   # POST /comments or /comments.json
   def create
@@ -32,6 +44,8 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
+  rescue StandardError => e
+    redirect_to comments_path, alert: "An error occurred while creating the comment: #{e.message}"
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json
@@ -45,6 +59,10 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to comments_path, alert: 'Comment not found.'
+  rescue StandardError => e
+    redirect_to comments_path, alert: "An error occurred while updating the comment: #{e.message}"
   end
 
   # DELETE /comments/1 or /comments/1.json
@@ -55,6 +73,10 @@ class CommentsController < ApplicationController
       format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to comments_path, alert: 'Comment not found.'
+  rescue StandardError => e
+    redirect_to comments_path, alert: "An error occurred while deleting the comment: #{e.message}"
   end
 
   private
@@ -62,6 +84,8 @@ class CommentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
     @comment = Comment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to comments_path, alert: 'Comment not found.'
   end
 
   # Only allow a list of trusted parameters through.

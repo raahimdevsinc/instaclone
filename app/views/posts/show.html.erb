@@ -1,3 +1,25 @@
+<%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
+  <p style="color: green"><%= notice %></p>
+
+  <%= render @post %>
+  <%= link_to "Back to posts", posts_path %>
+
+  <% if user_signed_in? %>
+    <% if current_user.id == @post.user.id %>
+      <div>
+        <%= link_to "Edit this post", edit_post_path(@post) %> |
+        <%= button_to "Delete this post", @post, method: :delete, data: { confirm: "Are you sure?" } %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= render "comments/form", comment: @comment %>
+
+  <% @post.comments.each do |comment| %>
+    <p><%= comment.text %></p>
+    <br>
+  <% end %>
+<% end %>
 <p style="color: green"><%= notice %></p>
 
 <%= render @post %>

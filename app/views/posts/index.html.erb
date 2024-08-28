@@ -24,12 +24,9 @@
   <% end %>
 <% end %>
 
-<%= turbo_frame_tag :results, data: {turbo_action: 'advance'} do %>
+<%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
   <div id="posts">
-    <% @posts.each do |post| %>
-      <%= render post %>
-    <% end %>
+    <%= render @posts %>
   </div>
-
   <%= turbo_frame_tag :pagination, loading: :lazy, src: posts_path(format: :turbo_stream) %>
 <% end %>
