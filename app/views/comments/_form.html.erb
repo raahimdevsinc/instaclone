@@ -1,10 +1,10 @@
-<%= turbo_frame_tag "results" do %>
-  <%= form_with do |form| %>
-    <% if comment.errors.any? %>
+<%= turbo_frame_tag "comments" do %>
+  <%= form_with(model: [ @post, @comment ], local: false) do |form| %>
+    <% if @comment.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
         <ul>
-          <% comment.errors.full_messages.each do |message| %>
+          <% @comment.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>
@@ -16,15 +16,12 @@
     </div>
 
     <div>
-      <%= form.text_field :user_id, type: "hidden" %>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+      <%= form.hidden_field :post_id, value: @post.id %>
     </div>
 
     <div>
-      <%= form.text_field :post_id, type: "hidden" %>
-    </div>
-
-    <div>
-      <%= form.submit %>
+      <%= form.submit "Create Comment" %>
     </div>
   <% end %>
 <% end %>

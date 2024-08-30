@@ -45,7 +45,8 @@ class CommentsController < ApplicationController
       end
     end
   rescue StandardError => e
-    redirect_to comments_path, alert: "An error occurred while creating the comment: #{e.message}"
+    redirect_to post_path(comment_params[:post_id]),
+                alert: "An error occurred while creating the comment: #{e.message}"
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json

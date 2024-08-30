@@ -12,6 +12,13 @@ class User < ApplicationRecord
   has_many :likes
   before_create :randomize_id
 
+  def follow(user)
+    raise 'Cannot follow yourself' if self == user
+
+    following << user
+    user.followers << self
+  end
+
   def unfollow(user)
     followerable_relationships.where(followable_id: user.id).destroy_all
   end
@@ -20,12 +27,14 @@ class User < ApplicationRecord
     %w[email username]
   end
 
+  def can_follow?(other_user)=!following?(other_user) && self != other_user
+end
+
   private
 
-  def randomize_id
-    loop do
-      self.id = SecureRandom.random_number(1_000_000_000)
-      break unless User.where(id: id).exists?
-    end
+def randomize_id
+  loop do
+    self.id = SecureRandom.random_number(1_000_000_000)
+    break unless User.where(id: id).exists?
   end
 end

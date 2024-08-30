@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.order(created_at: :asc)
-    @pagy, @posts = pagy_countless(@posts, items: 1)
+    @pagy, @posts = pagy_countless(@posts)
   rescue StandardError => e
     flash[:alert] = "An error occurred while loading posts: #{e.message}"
     redirect_to root_path

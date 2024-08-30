@@ -5,32 +5,24 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    # Already set_user before action
+    @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to users_path, alert: 'User not found.'
   end
 
   def follow
-    if current_user.can_follow?(@user)
-      current_user.send_follow_request_to(@user)
-      @user.accept_follow_request_of(current_user)
-      redirect_to user_path(@user), notice: 'Follow request sent and accepted.'
-    else
-      redirect_to user_path(@user), alert: "You can't follow this user."
-    end
-  rescue StandardError => e
-    redirect_to users_path, alert: "An error occurred: #{e.message}"
+    current_user.send_follow_request_to(@user)
+    @user.accept_follow_request_of(current_user)
+    redirect_to user_path(@user), notice: 'Now following.'
   end
 
   def unfollow
     if current_user.following?(@user)
       current_user.unfollow(@user)
-      redirect_to user_path(@user), notice: 'Unfollowed successfully.'
+      redirect_to user_path(@user), notice: 'No longer following.'
     else
-      redirect_to user_path(@user), alert: 'You are not following this user.'
+      redirect_to user_path(@user), alert: 'Not following.'
     end
-  rescue StandardError => e
-    redirect_to users_path, alert: "An error occurred: #{e.message}"
   end
 
   def accept
@@ -71,6 +63,6 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to users_path, alert: 'User not found.'
+    redirect_to root_path, alert: 'User not found.'
   end
 end
