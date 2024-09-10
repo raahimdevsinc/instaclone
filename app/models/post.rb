@@ -7,15 +7,5 @@ class Post < ApplicationRecord
   has_many_attached :images
   belongs_to :user
   has_many :comments, dependent: :destroy
-  has_many :likes
-  before_create :randomize_id
-
-  private
-
-  def randomize_id
-    loop do
-      self.id = SecureRandom.random_number(1_000_000_000)
-      break unless User.where(id: id).exists?
-    end
-  end
+  has_many :likes, dependent: :destroy
 end

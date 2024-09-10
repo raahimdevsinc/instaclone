@@ -1,6 +1,5 @@
 <%= stylesheet_link_tag "post", media: "all" %>
 
-<p style="color: green"><%= notice %></p>
 
 <% if user_signed_in? %>
   <% current_user.follow_requests.each do |request| %>

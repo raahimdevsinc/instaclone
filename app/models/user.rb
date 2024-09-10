@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   followability
@@ -27,14 +25,16 @@ class User < ApplicationRecord
     %w[email username]
   end
 
-  def can_follow?(other_user)=!following?(other_user) && self != other_user
-end
+  def can_follow?(other_user)
+    !following?(other_user) && self != other_user
+  end
 
   private
 
-def randomize_id
-  loop do
-    self.id = SecureRandom.random_number(1_000_000_000)
-    break unless User.where(id: id).exists?
+  def randomize_id
+    loop do
+      self.id = SecureRandom.random_number(1_000_000_000)
+      break unless User.where(id: id).exists?
+    end
   end
 end

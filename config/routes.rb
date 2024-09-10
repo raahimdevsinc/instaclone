@@ -11,28 +11,30 @@ Rails.application.routes.draw do
     get 'users/password' => 'devise/passwords#new'
   end
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    defaults: { format: :json }
   }
 
   resources :users, only: [:show]
 
-  post 'users/:id/follow' => 'users#follow', as: 'follow'
+  post 'users/:id/follow' => 'users#follow', as: 'user_follow'
+  get 'users/:id/following', to: 'users#following', as: 'user_following'
+  get 'users/:id/followers', to: 'users#followers', as: 'user_followers'
   post 'users/:id/unfollow' => 'users#unfollow', as: 'unfollow'
   post 'users/:id/accept' => 'users#accept', as: 'accept'
   post 'users/:id/decline' => 'users#decline', as: 'decline'
   post 'users/:id/cancel' => 'users#cancel', as: 'cancel'
+  post '/users/sign_in', to: 'users/sessions#create'
+  get '/users/current_user', to: 'users#current_user'
 
   get 'home/about'
   get 'posts/myposts'
 
   resources :posts do
-    resources :comments, only: %i[index create destroy]
+    resources :comments, only: %i[index create]
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")

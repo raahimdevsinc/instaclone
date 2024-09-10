@@ -34,7 +34,8 @@ gem 'jbuilder'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basclass CreateJwtDenylist < ActiveRecord::Migration[6.0]
+
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -81,4 +82,5 @@ gem 'devise'
 gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
 gem 'pagy'
 gem 'passenger'
+gem 'rack-cors', require: 'rack/cors'
 gem 'ransack'

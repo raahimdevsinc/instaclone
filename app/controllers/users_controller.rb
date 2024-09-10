@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show follow unfollow accept decline cancel]
-  before_action :authenticate_user!
+  before_action :set_user, only: %i[show follow unfollow accept decline cancel followers following]
+  before_action :authenticate_user!, except: %i[show followers following]
+
+  def current_user
+    render json: { user: current_user }
+  end
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      logger.info "User created successfully: #{@user.inspect}"
+      render json: { user: @user }, status: :created
+    else
+      logger.error "User creation failed: #{@user.errors.full_messages.inspect}"
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   def show
     @user = User.find(params[:id])
@@ -10,10 +25,14 @@ class UsersController < ApplicationController
     redirect_to users_path, alert: 'User not found.'
   end
 
-  def follow
-    current_user.send_follow_request_to(@user)
-    @user.accept_follow_request_of(current_user)
-    redirect_to user_path(@user), notice: 'Now following.'
+  def followers
+    @followers = @user.followers
+    render json: @followers
+  end
+
+  def following
+    @following = @user.following
+    render json: @following
   end
 
   def unfollow
@@ -63,6 +82,10 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: 'User not found.'
+    render json: { error: 'User not found' }, status: :not_found
+  end
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password)
   end
 end

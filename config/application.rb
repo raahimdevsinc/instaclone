@@ -25,5 +25,13 @@ module Instaclone
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_controller.default_protect_from_forgery = true
+    config.action_controller.allow_forgery_protection = true
+
+    config.action_dispatch.default_headers.merge!({
+                                                    'Access-Control-Allow-Origin' => 'http://localhost:3001', # Frontend origin
+                                                    'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+                                                    'Access-Control-Allow-Headers' => 'Content-Type, Authorization'
+                                                  })
   end
 end
